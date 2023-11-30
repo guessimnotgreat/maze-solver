@@ -2,7 +2,6 @@ from tkinter import Tk, BOTH, Canvas
 
 class Window:
     def __init__(self, width, height):
-        print("call constructor")
         self.__root = Tk()
         self.__root.title("Maze Solver")
         self.__canvas = Canvas(self.__root, bg="white", height=height, width=width)
@@ -16,13 +15,10 @@ class Window:
 
     def wait_for_close(self):
         self.__running = True
-        print("window open...")
         while self.__running == True:
             self.redraw()
-        print("window closed...")
 
     def close(self):
-        print("from close")
         self.__running = False
     
     def draw_line(self, line, fill_color="black"):
