@@ -31,15 +31,16 @@ class Cell:
         self._win.draw_line(Line(top_left, top_right), top_color)
         self._win.draw_line(Line(bottom_left, bottom_right), bottom_color)
 
+    # Get available paths from the current cell
     def get_paths(self, col, row, max_col, max_row):
         paths = []
-        if not self.has_left_wall and col != 0:
+        if not self.has_left_wall and col > 0:
             paths.append((col - 1, row))
-        if not self.has_right_wall and col != max_col:
+        if not self.has_right_wall and col < max_col:
             paths.append((col + 1, row))
-        if not self.has_top_wall and row != 0:
+        if not self.has_top_wall and row > 0:
             paths.append((col, row - 1))
-        if not self.has_bottom_wall and row != max_row:
+        if not self.has_bottom_wall and row < max_row:
             paths.append((col, row + 1))
         return paths
 
