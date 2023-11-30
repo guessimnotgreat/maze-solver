@@ -48,18 +48,18 @@ class Cell:
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
-        self._x1 = x1
-        self._x2 = x2
-        self._y1 = y1
-        self._y2 = y2
         self._win = win
+        self.top_left = Point(x1, y1)
+        self.bottom_left = Point(x1, y2)
+        self.top_right = Point(x2, y1)
+        self.bottom_right = Point(x2, y2)
 
     def draw(self):
-        if self.has_left_wall == True:
-            self._win.draw_line(Line(self._x1, self._y1))
-        if self.has_right_wall == True:
-            self._win.draw_line(Line(self._x2, self._y2))
-        if self.has_top_wall == True:
-            self._win.draw_line(Line(self._y1, self._y2))
-        if self.has_bottom_wall == True:
-            self.win.draw_line(Line(self._x1, self._x2))
+        if self.has_left_wall:
+            self._win.draw_line(Line(self.top_left, self.bottom_left))
+        if self.has_right_wall:
+            self._win.draw_line(Line(self.top_right, self.bottom_right))
+        if self.has_top_wall:
+            self._win.draw_line(Line(self.top_left, self.top_right))
+        if self.has_bottom_wall:
+            self._win.draw_line(Line(self.bottom_left, self.bottom_right))
