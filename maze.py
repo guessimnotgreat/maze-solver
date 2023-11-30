@@ -32,6 +32,9 @@ class Maze:
             return
         col = i
         row = j
+        # Only focus on x1 and y1 if you want to specify the position.
+        # x1 represents the distance from the left side of the canvas to the starting x-coordinate.
+        # y1 represents the distance from the top side of the canvas to the starting y-coordinate.
         cell_x1 = self.x1 + (self.cell_size_x * col)
         cell_y1 = self.y1 + (self.cell_size_y * row)
         cell_x2 = cell_x1 + self.cell_size_x
@@ -56,29 +59,30 @@ class Maze:
         self._cells[i][j].visited = True
 
         while True:
-            next_indices = []
+            available_directions = []
 
             # Check Left
             if i > 0 and not self._cells[i - 1][j].visited:
-                next_indices.append((i - 1, j))
+                available_directions.append((i - 1, j))
             # Check Right
             if i < self._num_cols - 1 and not self._cells[i + 1][j].visited:
-                next_indices.append((i + 1, j))
+                available_directions.append((i + 1, j))
             # Check Up
             if j > 0 and not self._cells[i][j - 1].visited:
-                next_indices.append((i, j - 1))
+                available_directions.append((i, j - 1))
             # Check Down
             if j < self._num_rows - 1 and not self._cells[i][j + 1].visited:
-                next_indices.append((i, j + 1))
+                available_directions.append((i, j + 1))
 
-            if not next_indices:
+            if not available_directions:
                 self._draw_cell(i, j)
                 return
 
-            next_index = random.choice(next_indices)
-            self._knock_down_walls(i, j, *next_index)
+            next_direction = random.choice(available_directions)
+            next_i, next_j = next_direction
+            self._knock_down_walls(i, j, next_i, next_j)
 
-            i, j = next_index
+            i, j = next_direction
             self._break_walls_r(i, j)
 
     def _knock_down_walls(self, i, j, new_i, new_j):
